@@ -1,0 +1,198 @@
+{% include 'layout.html' %}
+
+<style>
+  .posts-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-bottom: none;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .card-text {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .table td {
+    padding: 1rem;
+    vertical-align: middle;
+  }
+  
+  .pointer {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .pointer:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .btn-info {
+    background-color: #17a2b8;
+    border: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+  }
+  
+  .btn-info:hover {
+    background-color: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    margin-top: 1rem;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .alert-success {
+    background-color: rgba(40, 167, 69, 0.1);
+  }
+  
+  .strike-through-td {
+    text-decoration: line-through;
+    color: #28a745;
+  }
+  
+  .post-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+  }
+  
+  .status-draft {
+    background-color: #f8f9fa;
+    color: #6c757d;
+  }
+  
+  .status-published {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+  }
+  
+  .empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: #6c757d;
+  }
+</style>
+
+<div class="container posts-container">
+    <div class="card text-center">
+        <div class="card-header">
+            Your Posts Dashboard
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Manage Your Content
+            </h5>
+            <p class="card-text">
+                View, edit and publish your posts from one place
+            </p>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Post Title</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                {% if post.is_published == False %}
+                <tr class="pointer">
+                    <td>{{loop.index}}</td>
+                    <td>
+                        {{post.title}}
+                        <span class="post-status status-draft">Draft</span>
+                    </td>
+                    <td>
+                        <button onclick="window.location.href='edit-post-page/{{post.id}}'"
+                                type="button" class="btn btn-info">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="pointer alert alert-success">
+                    <td>{{loop.index}}</td>
+                    <td class="strike-through-td">
+                        {{post.title}}
+                        <span class="post-status status-published">Published</span>
+                    </td>
+                    <td>
+                        <button onclick="window.location.href='edit-post-page/{{post.id}}'"
+                                type="button" class="btn btn-info">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                
+                {% if posts|length == 0 %}
+                <tr>
+                    <td colspan="3" class="empty-state">
+                        <i class="fa fa-file-alt fa-3x mb-3"></i>
+                        <p>You don't have any posts yet. Get started by adding your first post!</p>
+                    </td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            <a href="add-post-page" class="btn btn-primary">
+                <i class="fa fa-plus-circle"></i> Add a new post!
+            </a>
+        </div>
+    </div>
+</div>

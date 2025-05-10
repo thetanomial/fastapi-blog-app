@@ -1,0 +1,300 @@
+{% include "layout.html" %}
+
+<style>
+  .register-container {
+    max-width: 900px;
+    margin: 1rem auto;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: none;
+  }
+  
+  .card-body {
+    padding: 1rem 1.5rem;
+    background-color: #ffffff;
+  }
+  
+  .card-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .form-section {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .form-section-title {
+    font-weight: 600;
+    color: #6a11cb;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -8px;
+    margin-left: -8px;
+    margin-bottom: 0.25rem;
+  }
+  
+  label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.25rem;
+    display: block;
+    font-size: 0.8rem;
+  }
+  
+  .form-control {
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #dce1e8;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    height: auto;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 0 0.15rem rgba(106, 17, 203, 0.15);
+    border-color: #6a11cb;
+    background-color: #ffffff;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    color: #6c757d;
+    z-index: 10;
+    font-size: 0.8rem;
+  }
+  
+  .input-with-icon {
+    padding-left: 1.8rem;
+  }
+  
+  .form-group {
+    margin-bottom: 0.5rem;
+    padding: 0 8px;
+  }
+  
+  .btn-register {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(106, 17, 203, 0.25);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
+  }
+  
+  .login-link {
+    font-weight: 600;
+    color: #2575fc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .login-link:hover {
+    color: #6a11cb;
+    text-decoration: none;
+  }
+  
+  .required-field::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 2px;
+    font-size: 0.8rem;
+  }
+  
+  .password-strength {
+    height: 3px;
+    border-radius: 1px;
+    margin-top: 3px;
+    background-color: #e9ecef;
+    overflow: hidden;
+  }
+  
+  .password-strength-meter {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease;
+    background: linear-gradient(to right, #dc3545, #ffc107, #28a745);
+  }
+  
+  small {
+    font-size: 0.7rem;
+  }
+  
+  /* Compact the spacing between form groups */
+  .compact-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .compact-col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .compact-col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  /* More compact padding for form sections */
+  .last-section {
+    border-bottom: none;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .compact-col-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<div class="container register-container">
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-user-plus mr-1"></i> Create Account
+    </div>
+    <div class="card-body">
+      <form id="registerForm">
+        <!-- Personal Information Section -->
+        <div class="compact-row">
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">First Name</label>
+              <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="form-control input-with-icon" name="firstname" placeholder="First name" required>
+              </div>
+            </div>
+          </div>
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Last Name</label>
+              <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="form-control input-with-icon" name="lastname" placeholder="Last name" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="compact-row">
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Email</label>
+              <div class="input-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" class="form-control input-with-icon" name="email" placeholder="Email address" required>
+              </div>
+            </div>
+          </div>
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Username</label>
+              <div class="input-group">
+                <i class="fas fa-at input-icon"></i>
+                <input type="text" class="form-control input-with-icon" name="username" placeholder="Username" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="compact-row">
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Role</label>
+              <div class="input-group">
+                <i class="fas fa-briefcase input-icon"></i>
+                <input type="text" class="form-control input-with-icon" name="role" placeholder="Your role" required>
+              </div>
+            </div>
+          </div>
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Phone Number</label>
+              <div class="input-group">
+                <i class="fas fa-phone input-icon"></i>
+                <input type="text" class="form-control input-with-icon" name="phone_number" placeholder="Phone number" autocomplete="phone_number" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="compact-row">
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Password</label>
+              <div class="input-group">
+                <i class="fas fa-key input-icon"></i>
+                <input type="password" class="form-control input-with-icon" name="password" placeholder="Create password" autocomplete="new-password" required>
+              </div>
+            </div>
+          </div>
+          <div class="compact-col-6">
+            <div class="form-group">
+              <label class="required-field">Verify Password</label>
+              <div class="input-group">
+                <i class="fas fa-shield-alt input-icon"></i>
+                <input type="password" class="form-control input-with-icon" name="password2" placeholder="Confirm password" autocomplete="new-password" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-2">
+          <button type="submit" class="btn btn-register">
+            <i class="fas fa-user-plus mr-1"></i> Create Account
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer text-muted">
+      <span>Already have an account? </span>
+      <a href="/auth/login-page" class="login-link">Sign in</a>
+    </div>
+  </div>
+</div>

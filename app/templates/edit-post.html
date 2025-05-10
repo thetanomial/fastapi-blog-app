@@ -1,0 +1,274 @@
+{% include 'layout.html' %}
+
+<style>
+  .edit-post-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 1.25rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-bottom: none;
+  }
+  
+  .card-body {
+    padding: 2rem;
+    background-color: #ffffff;
+  }
+  
+  label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dce1e8;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.15);
+    border-color: #6a11cb;
+    background-color: #ffffff;
+  }
+  
+  textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .priority-select {
+    position: relative;
+  }
+  
+  .priority-select::after {
+    content: "▼";
+    font-size: 0.8rem;
+    color: #6c757d;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 2rem;
+  }
+  
+  .form-check {
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+  }
+  
+  .form-check-input {
+    margin-right: 0.75rem;
+    transform: scale(1.2);
+    flex-shrink: 0;
+  }
+
+  .custom-checkbox {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+  }
+  
+  .custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dce1e8;
+    transition: all 0.2s ease;
+  }
+  
+  .custom-checkbox:hover input ~ .checkmark {
+    background-color: #f0f0f0;
+  }
+  
+  .custom-checkbox input:checked ~ .checkmark {
+    background-color: #2575fc;
+    border-color: #2575fc;
+  }
+  
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .custom-checkbox .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    margin-right: 0.75rem;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+    box-shadow: 0 4px 10px rgba(37, 117, 252, 0.2);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 117, 252, 0.3);
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+  }
+  
+  .btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
+    background-color: #c82333;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+  }
+  
+  .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+  }
+  
+  .required-field::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+  }
+  
+  .form-footer {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .form-footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .btn {
+      margin-right: 0;
+      margin-bottom: 0.75rem;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="container edit-post-container">
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-edit mr-2"></i> Let's edit your post!
+    </div>
+    <div class="card-body">
+      <form id="editPostForm">
+        <div class="form-group">
+          <label class="required-field">Title</label>
+          <input type="text" class="form-control" name="title" value="{{post.title}}" required>
+        </div>
+        <div class="form-group">
+          <label class="required-field">Description</label>
+          <textarea name="description" class="form-control" rows="3" required>{{post.description}}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <div class="priority-select">
+            <select name="priority" class="form-control">
+              <option {% if post.priority == 1 %} selected="selected" {% endif %}>1</option>
+              <option {% if post.priority == 2 %} selected="selected" {% endif %}>2</option>
+              <option {% if post.priority == 3 %} selected="selected" {% endif %}>3</option>
+              <option {% if post.priority == 4 %} selected="selected" {% endif %}>4</option>
+              <option {% if post.priority == 5 %} selected="selected" {% endif %}>5</option>
+            </select>
+          </div>
+          <small class="text-muted">1 = Highest priority, 5 = Lowest priority</small>
+        </div>
+        <div class="form-group">
+          <label class="custom-checkbox">
+            <input type="checkbox" name="is_published" {% if post.is_published %} checked {% endif %}>
+            <span class="checkmark"></span>
+            Publish this post
+          </label>
+          <small class="text-muted">Check this box to make your post public</small>
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save mr-2"></i> Save changes
+          </button>
+          <button id="deleteButton" type="button" class="btn btn-danger">
+            <i class="fas fa-trash-alt mr-2"></i> Delete
+          </button>
+          <a href="/posts/post-page" class="btn btn-success">
+            <i class="fas fa-arrow-left mr-2"></i> Back
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
